@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Lời tỏ tình</title>
+<style>
+  body {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, sans-serif;
+    background: #ffebef;
+    overflow-x: hidden;
+  }
+
+  .center {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    text-align: center;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2.5rem;
+    color: #d6336c;
+    animation: fadeIn 2s ease forwards;
+  }
+
+  button {
+    padding: 12px 24px;
+    margin: 12px;
+    font-size: 1.2rem;
+    border: none;
+    border-radius: 12px;
+    cursor: pointer;
+    background: #ff4d6d;
+    color: white;
+    transition: 0.3s;
+  }
+
+  button:hover {
+    background: #d6336c;
+  }
+
+  #noBtn {
+    position: absolute;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Màn hình 2 */
+  #screen2 {
+    display: none;
+    padding: 20px;
+    animation: fadeIn 1s ease forwards;
+  }
+
+  .gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 12px;
+    margin-top: 20px;
+  }
+
+  .gallery img {
+    width: 100%;
+    height: 120px;
+    object-fit: cover;
+    border-radius: 10px;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+  }
+
+  textarea {
+    width: 100%;
+    height: 120px;
+    margin-top: 20px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ff4d6d;
+    font-size: 1rem;
+  }
+
+  /* Hiệu ứng trái tim */
+  .heart {
+    position: fixed;
+    top: -10px;
+    color: #ff4d6d;
+    font-size: 20px;
+    animation: fall 4s linear infinite;
+  }
+
+  @keyframes fall {
+    to { transform: translateY(120vh); opacity: 0; }
+  }
+</style>
+</head>
+<body>
+
+<audio autoplay loop>
+  <source src="romantic.mp3" type="audio/mpeg">
+</audio>
+
+<div id="screen1" class="center">
+  <h1>Cưới anh nhé? ❤️</h1>
+  <button id="yesBtn">Đồng ý</button>
+  <button id="noBtn">Không đồng ý</button>
+</div>
+
+<div id="screen2">
+  <h2>Những kỷ niệm của chúng ta 💕</h2>
+  <div class="gallery">
+    <img src="img1.jpg" />
+    <img src="img2.jpg" />
+    <img src="img3.jpg" />
+    <img src="img4.jpg" />
+  </div>
+
+  <h3>Lời chúc dành cho em ❤️</h3>
+  <textarea placeholder="Viết lời nhắn của anh tại đây..."></textarea>
+</div>
+
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 100);
+    const y = Math.random() * (window.innerHeight - 50);
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  });
+
+  yesBtn.addEventListener("click", () => {
+    document.getElementById("screen1").style.display = "none";
+    document.getElementById("screen2").style.display = "block";
+  });
+
+  function createHeart() {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.fontSize = Math.random() * 20 + 10 + "px";
+    document.body.appendChild(heart);
+
+    setTimeout(() => heart.remove(), 4000);
+  }
+
+  setInterval(createHeart, 500);
+</script>
+
+</body>
+</html>
