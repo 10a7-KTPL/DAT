@@ -27,6 +27,24 @@
     font-size: 2.5rem;
     color: #d6336c;
     animation: fadeIn 2s ease forwards;
+    margin-bottom: 20px;
+  }
+
+  /* Khung ảnh màn 1 */
+  .avatar-frame {
+    width: 220px;
+    height: 220px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 6px solid #ff4d6d;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+    margin-bottom: 25px;
+  }
+
+  .avatar-frame img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
   }
 
   button {
@@ -39,6 +57,7 @@
     background: #ff4d6d;
     color: white;
     transition: 0.3s;
+    position: relative;
   }
 
   button:hover {
@@ -59,31 +78,30 @@
     display: none;
     padding: 20px;
     animation: fadeIn 1s ease forwards;
+    text-align: center;
   }
 
-  .gallery {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
-    gap: 12px;
-    margin-top: 20px;
+  /* Slideshow */
+  .slideshow {
+    width: 90%;
+    max-width: 350px;
+    height: 350px;
+    margin: 0 auto;
+    overflow: hidden;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
   }
 
-  .gallery img {
+  .slideshow img {
     width: 100%;
-    height: 120px;
+    height: 100%;
     object-fit: cover;
-    border-radius: 10px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+    animation: fadeSlide 1s ease-in-out;
   }
 
-  textarea {
-    width: 100%;
-    height: 120px;
-    margin-top: 20px;
-    padding: 12px;
-    border-radius: 10px;
-    border: 1px solid #ff4d6d;
-    font-size: 1rem;
+  @keyframes fadeSlide {
+    from { opacity: 0; }
+    to { opacity: 1; }
   }
 
   /* Hiệu ứng trái tim */
@@ -98,6 +116,17 @@
   @keyframes fall {
     to { transform: translateY(120vh); opacity: 0; }
   }
+
+  .message-box {
+    margin-top: 25px;
+    padding: 15px;
+    background: white;
+    border-radius: 12px;
+    border: 2px solid #ff4d6d;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+    font-size: 1.1rem;
+    white-space: pre-line;
+  }
 </style>
 </head>
 <body>
@@ -106,23 +135,29 @@
   <source src="romantic.mp3" type="audio/mpeg">
 </audio>
 
+<!-- MÀN 1 -->
 <div id="screen1" class="center">
+  <div class="avatar-frame">
+    <img src="avatar.jpg" alt="Ảnh của em" />
+  </div>
   <h1>Cưới anh nhé? ❤️</h1>
-  <button id="yesBtn">Đồng ý</button>
-  <button id="noBtn">Không đồng ý</button>
+  <div style="position: relative; width: 100%; height: 120px;">
+    <button id="yesBtn">Đồng ý</button>
+    <button id="noBtn">Không đồng ý</button>
+  </div>
 </div>
 
+<!-- MÀN 2 -->
 <div id="screen2">
-  <h2>Những kỷ niệm của chúng ta 💕</h2>
-  <div class="gallery">
-    <img src="img1.jpg" />
-    <img src="img2.jpg" />
-    <img src="img3.jpg" />
-    <img src="img4.jpg" />
+  <h2>Những khoảnh khắc của đôi mình 💕</h2>
+
+  <div class="slideshow">
+    <img id="slideImg" src="img1.jpg" />
   </div>
 
-  <h3>Lời chúc dành cho em ❤️</h3>
-  <textarea placeholder="Viết lời nhắn của anh tại đây..."></textarea>
+  <div class="message-box">
+    Anh biết rằng cuộc đời này sẽ đẹp hơn nhiều nếu có em đi cùng. Em chính là món quà tuyệt vời nhất mà định mệnh đã gửi đến cho anh. Cảm ơn em vì đã đến, đã thương và đã ở lại. ❤️
+  </div>
 </div>
 
 <script>
@@ -130,8 +165,8 @@
   const yesBtn = document.getElementById("yesBtn");
 
   noBtn.addEventListener("mouseover", () => {
-    const x = Math.random() * (window.innerWidth - 100);
-    const y = Math.random() * (window.innerHeight - 50);
+    const x = Math.random() * (window.innerWidth - 120);
+    const y = Math.random() * (window.innerHeight - 120);
     noBtn.style.left = x + "px";
     noBtn.style.top = y + "px";
   });
@@ -141,6 +176,7 @@
     document.getElementById("screen2").style.display = "block";
   });
 
+  // HEART EFFECT
   function createHeart() {
     const heart = document.createElement("div");
     heart.classList.add("heart");
@@ -153,6 +189,15 @@
   }
 
   setInterval(createHeart, 500);
+
+  // SLIDESHOW
+  const images = ["img1.jpg", "img2.jpg", "img3.jpg", "img4.jpg"];
+  let index = 0;
+
+  setInterval(() => {
+    index = (index + 1) % images.length;
+    document.getElementById("slideImg").src = images[index];
+  }, 2500);
 </script>
 
 </body>
